@@ -17,7 +17,7 @@ class InputData extends Component {
   }
 
   onChangeValue = (event) => {
-    this.setState({ value: Number.parseInt(event.target.value) });
+    this.setState({ value: Number.parseInt(event.target.value, 10) });
   }
 
   onChangeOption = (event) => {
@@ -39,7 +39,7 @@ class InputData extends Component {
     this.props.addNewEntry(data);
     this.setState({ description: '', value: '' });
   }
-  
+
   render() {
     return (
       <div className="add">

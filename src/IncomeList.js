@@ -12,7 +12,7 @@ const IncomeList = (props) => {
                 <div className="right clearfix">
                     <div className="item__value">+ { income.value }</div>
                     <div className="item__delete">
-                        <button className="item__delete--btn" onClick={ () => { props.deleteEntry(income, i) } }>
+                        <button className="item__delete--btn" onClick={ () => { props.deleteEntry(income) } }>
                             <i className="ion-ios-close-outline"></i>
                         </button>
                     </div>

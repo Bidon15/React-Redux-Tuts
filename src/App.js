@@ -13,59 +13,46 @@ class App extends Component {
       allExpenses: [],
       allIncomes: [],
       totalInc: 0,
-      totalExp: ''
+      totalExp: 0
     };
-  }
-
-  countTotalIncome = () => {
-    let total = 0;
-    this.state.allIncomes.forEach((el) => {
-      total += el.value;
-    });
-    this.setState({ totalInc: total });
-  }
-
-  countTotalExpense = () => {
-    let total = 0;
-    this.state.allExpenses.forEach((el) => {
-      total += el.value;
-    });
-    this.setState({ totalExp: total });
   }
 
   addNewEntry = (data) => {
     if (data.type === 'inc') {
-      this.setState({ allIncomes: [...this.state.allIncomes, data] });
-      this.countTotalIncome();
+      this.setState({
+        allIncomes: [...this.state.allIncomes, data],
+        totalInc: this.state.totalInc + data.value
+      });
     } else {
-      this.setState({ allExpenses: [...this.state.allExpenses, data] });
+      this.setState({
+        allExpenses: [...this.state.allExpenses, data],
+        totalExp: this.state.totalExp + data.value
+      });
     }
   }
 
-  deleteEntry = (data, id) => {
-    console.log(data);
-    console.log(id);
+  deleteEntry = (data) => {
     if (data.type === 'inc') {
-      const index = this.state.allIncomes.indexOf(data);
-      if (index !== -1) {
-        this.setState({ allIncomes: this.state.allIncomes.splice(index, 1) });
-        this.countTotalIncome();
-      }
+      this.setState({ allIncomes: this.state.allIncomes.filter((income) => {
+        return (income !== data);
+      }) });
     } else {
-      this.setState({ allExpenses: this.state.allExpenses.splice(id, 1) });
+      this.setState({ allExpenses: this.state.allExpenses.filter((expense) => {
+        return (expense !== data);
+      }) });
     }
-    console.log(this.state.allIncomes);
   }
 
   render() {
     return (
       <div>
-        <TotalInfo/>
+        <TotalInfo totalInc={ this.state.totalInc } totalExp={ this.state.totalExp }/>
         <div className="bottom">
           <InputData addNewEntry={ this.addNewEntry }/>
           <div className="container clearfix">
               <IncomeList incomes={ this.state.allIncomes } deleteEntry={ this.deleteEntry } />
-              <ExpenseList expenses={ this.state.allExpenses } totalInc={ this.state.totalInc }/>
+              <ExpenseList expenses={ this.state.allExpenses } totalInc={ this.state.totalInc }
+                deleteEntry={ this.deleteEntry }/>
           </div>
         </div>
       </div>
