@@ -8,20 +8,33 @@ class InputData extends Component {
     this.state = {
       type: 'inc',
       desc: '',
-      val: ''
+      val: '',
+      redgroup: '',
+      redbtn: '',
     }
   }
 
   onChange = (e) => {
-    this.setState({[e.target.name]: e.target.value})
+    if (e.target.name === 'type') {
+      switch (e.target.value) {
+        case 'inc':
+          this.setState({ redgroup: '', redbtn: '' });
+          break;
+        case 'exp':
+          this.setState({ redgroup: 'redgroup', redbtn: 'red' });
+          break;
+      }
+
+    }
+    this.setState({[e.target.name]: e.target.value});
   }
 
   render() {
     return (
       <div className="add">
           <div className="add__container">
-              <select value={ this.state.type }
-                className={ 'add__type' }>
+              <select name="type" value={ this.state.type }
+                className='add__type' onChange= { this.onChange }>
                   <option value="inc">+</option>
                   <option value="exp">-</option>
               </select>

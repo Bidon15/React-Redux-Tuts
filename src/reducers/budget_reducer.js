@@ -11,7 +11,6 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case ADD_ITEM: {
-      console.log(action.data);
       if (action.data.type === 'inc') {
         return {
           ...state,
@@ -29,17 +28,16 @@ export default function(state = initialState, action) {
 
     case DELETE_ITEM: {
       if (action.data.item.type === 'inc') {
-        console.log(state.incomes);
         return {
           ...state,
-          incomes: state.incomes.filter((income, index) => income !== action.data.item),
-          totalInc: state.totalInc - parseInt(action.data.val, 10)
+          incomes: state.incomes.filter((income, index) => (index !== action.data.index)),
+          totalInc: state.totalInc - parseInt(action.data.item.val, 10)
         }
       } else {
         return {
           ...state,
-          expenses: state.expenses.filter((expense, index) => (expense !== action.data)&&(index !== action.data.index)),
-          totalExp: state.totalExp - parseInt(action.data.val, 10)
+          expenses: state.expenses.filter((expense, index) => (index !== action.data.index)),
+          totalExp: state.totalExp - parseInt(action.data.item.val, 10)
         }
       }
     }

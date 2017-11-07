@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class TotalInfo extends Component {
+  checkNaN = () => {
+    if (this.props.budget.totalExp === 0) {
+      return 0;
+    } else {
+      return this.props.budget.totalInc / this.props.budget.totalExp * 100;
+    }
+  }
   render() {
     return (
       <div className="top">
@@ -25,7 +32,7 @@ class TotalInfo extends Component {
                 <div className="right clearfix">
                     <div className="budget__expenses--value">- { this.props.budget.totalExp }</div>
                     <div className="budget__expenses--percentage">
-                      {/* { Math.round(checkNaN()) }% */}0%
+                      {Math.round(this.checkNaN())}0%
                     </div>
                 </div>
             </div>
